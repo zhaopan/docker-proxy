@@ -1,0 +1,20 @@
+name: Docker Image Proxy CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+env:
+  REDIS-TAG: 5.0
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: proxy redis
+        run:
+          docker pull redis:${{ env.REDIS-TAG }} &&
+          docker tag redis:${{ env.REDIS-TAG }} ${{ secrets.HUB_HOST }}/redis:${{ env.REDIS-TAG }} &&
+          docker login -u ${{ secrets.USERNAME}} -p ${{ secrets.PASSWORD}} ${{ secrets.HUB_HOST }} &&
+          docker push ${{ secrets.HUB_HOST }}/redis:${{ env.REDIS-TAG }}

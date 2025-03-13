@@ -1,0 +1,20 @@
+name: Docker Image Proxy CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+env:
+  MONGO-TAG: 3.4
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: proxy mongo
+        run:
+          docker pull mongo:${{ env.MONGO-TAG }} &&
+          docker tag mongo:${{ env.MONGO-TAG }} ${{ secrets.HUB_HOST }}/mongo:${{ env.MONGO-TAG }} &&
+          docker login -u ${{ secrets.USERNAME}} -p ${{ secrets.PASSWORD}} ${{ secrets.HUB_HOST }} &&
+          docker push ${{ secrets.HUB_HOST }}/mongo:${{ env.MONGO-TAG }}

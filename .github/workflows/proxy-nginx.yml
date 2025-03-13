@@ -1,0 +1,20 @@
+name: Docker Image Proxy CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+env:
+  NGINX-TAG: 1.14
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: proxy nginx
+        run:
+          docker pull nginx:${{ env.NGINX-TAG }} &&
+          docker tag nginx:${{ env.NGINX-TAG }} ${{ secrets.HUB_HOST }}/nginx:${{ env.NGINX-TAG }} &&
+          docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ secrets.HUB_HOST }} &&
+          docker push ${{ secrets.HUB_HOST }}/nginx:${{ env.NGINX-TAG }}

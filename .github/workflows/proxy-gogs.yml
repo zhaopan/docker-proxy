@@ -1,0 +1,20 @@
+name: Docker Image Proxy CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+env:
+  GOGS-TAG: 0.13
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: proxy gogs
+        run:
+          docker pull gogs/gogs:${{ env.GOGS-TAG }} &&
+          docker tag gogs/gogs:${{ env.GOGS-TAG }} ${{ secrets.HUB_HOST }}/gogs:${{ env.GOGS-TAG }} &&
+          docker login -u ${{ secrets.USERNAME}} -p ${{ secrets.PASSWORD}} ${{ secrets.HUB_HOST }} &&
+          docker push ${{ secrets.HUB_HOST }}/gogs:${{ env.GOGS-TAG }}
