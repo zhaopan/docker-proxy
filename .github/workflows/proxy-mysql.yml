@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: proxy mysql
         run:
-          docker pull mysql:${{ env.MONGO-TAG }} &&
-          docker tag mysql:${{ env.MONGO-TAG }} ${{ secrets.HUB_HOST }}/mysql:${{ env.MONGO-TAG }} &&
+          docker pull mysql/mysql-server:${{ env.MONGO-TAG }} &&
+          docker tag mysql/mysql-server:${{ env.MONGO-TAG }} ${{ secrets.HUB_HOST }}/mysql/mysql-server:${{ env.MONGO-TAG }} &&
           docker login -u ${{ secrets.USERNAME}} -p ${{ secrets.PASSWORD}} ${{ secrets.HUB_HOST }} &&
-          docker push ${{ secrets.HUB_HOST }}/mysql:${{ env.MONGO-TAG }}
+          docker push ${{ secrets.HUB_HOST }}/mysql/mysql-server:${{ env.MONGO-TAG }}
