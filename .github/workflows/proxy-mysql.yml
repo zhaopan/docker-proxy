@@ -12,9 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: proxy mongo
+      - name: proxy mysql
         run:
-          docker pull mongo:${{ env.MONGO-TAG }} &&
-          docker tag mongo:${{ env.MONGO-TAG }} ${{ secrets.HUB_HOST }}/mongo:${{ env.MONGO-TAG }} &&
+          docker pull mysql:${{ env.MONGO-TAG }} &&
+          docker tag mysql:${{ env.MONGO-TAG }} ${{ secrets.HUB_HOST }}/mysql:${{ env.MONGO-TAG }} &&
           docker login -u ${{ secrets.USERNAME}} -p ${{ secrets.PASSWORD}} ${{ secrets.HUB_HOST }} &&
-          docker push ${{ secrets.HUB_HOST }}/mongo:${{ env.MONGO-TAG }}
+          docker push ${{ secrets.HUB_HOST }}/mysql:${{ env.MONGO-TAG }}
