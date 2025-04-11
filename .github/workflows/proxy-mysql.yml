@@ -1,4 +1,4 @@
-name: Docker Image Proxy CI
+name: Docker Image Proxy mysql
 
 on:
   push:

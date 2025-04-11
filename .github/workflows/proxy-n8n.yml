@@ -1,4 +1,4 @@
-name: Docker Image Proxy CI
+name: Docker Image Proxy n8n
 
 on:
   push:
