@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
   workflow_dispatch:
 env:
-  CADDY-TAG: 2.10
+  CADDY-TAG: "2.10"
 jobs:
   build:
     runs-on: ubuntu-latest
